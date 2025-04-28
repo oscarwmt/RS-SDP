@@ -1,0 +1,12 @@
+/* Global Styles */
+select {
+  @apply block w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500;
+}
+
+button {
+  @apply px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-300 shadow-md;
+}
+
+a {
+  @apply text-blue-600 hover:underline;
+}
