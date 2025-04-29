@@ -4,6 +4,31 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const path = require("path");
 
+const app = express();
+const PORT = process.env.PORT || 5001;
+
+// Configuración de CORS
+const allowedOrigins = process.env.NODE_ENV === "production"
+    ? ["http://18.226.28.27"]
+    : ["http://localhost:5173"];
+
+ const corsOptions = {
+  origin: "http://18.226.28.27", // Permitir solicitudes desde el frontend
+  methods: ["GET", "POST", "PUT", "DELETE"], // Métodos permitidos
+  allowedHeaders: ["Content-Type", "Authorization"], // Encabezados permitidos
+  //credentials: true, // Permitir envío de cookies o credenciales
+};
+
+// Configurar CORS para permitir solicitudes desde tu frontend
+//const corsOptions = {
+//  origin: 'http://18.226.28.27',  // Aquí debes poner la URL de tu frontend
+//  methods: 'GET,POST,PUT,DELETE', // Métodos que permites
+//  allowedHeaders: 'Content-Type,Authorization', // Los encabezados permitidos
+//};
+
+
+app.use(cors(corsOptions)); // Usar configuración de CORS
+
 const db = require("./db"); // Conexión a la base de datos
 const propiedadesRoutes = require("./routes/propiedades");
 const usuariosRoutes = require("./routes/usuarios");
@@ -13,19 +38,6 @@ const imagenesRoutes = require("./routes/imagenesRoutes"); // Importar el nuevo 
 const contactoRoutes = require("./routes/contactoRoutes"); // Importar las rutas de contacto
 
 dotenv.config();
-
-const app = express();
-const PORT = process.env.PORT || 5001;
-
-// Configuración de CORS
-const corsOptions = {
-  origin: "http://localhost:5173", // Permitir solicitudes desde el frontend
-  methods: ["GET", "POST", "PUT", "DELETE"], // Métodos permitidos
-  allowedHeaders: ["Content-Type", "Authorization"], // Encabezados permitidos
-  credentials: true, // Permitir envío de cookies o credenciales
-};
-
-app.use(cors(corsOptions)); // Usar configuración de CORS
 
 // Middlewares globales
 app.use(express.json());
@@ -47,5 +59,5 @@ app.get("/", (req, res) => {
 
 // Iniciar el servidor
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+  console.log(`Servidor corriendo en http://18.226.28.27:${PORT}`);
 });

@@ -18,7 +18,7 @@ const PropertyList = () => {
 
     const fetchProperties = async () => {
       try {
-        const base = import.meta.env.VITE_BASE_URL || "http://localhost:5001"; // Asegúrate de que la URL base sea correcta
+        const base = import.meta.env.VITE_BASE_URL || "http://18.226.28.27:5001"; // Asegúrate de que la URL base sea correcta
         const token = localStorage.getItem("token");
         const headers = { Authorization: `Bearer ${token}` };
         const response = await axios.get(`${base}/api/propiedades`, {

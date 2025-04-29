@@ -20,17 +20,22 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   try {
     const query = `
-      SELECT 
-        p.*, 
+      SELECT
+        p.*,
         i.url AS imagen_destacada_url
       FROM propiedades p
       LEFT JOIN imagenes i ON p.imagen_destacada_id = i.id
     `;
     const result = await db.query(query);
 
+console.log(" ACA  :  ", query, "FIN");
+
+console.log(" ACA  :  ", result.rows, "FIN");
+
+
     // Construir la URL completa para la imagen destacada
     const propiedades = result.rows.map((propiedad) => {
-      const baseUrl = process.env.BASE_URL || "http://localhost:5001"; // Valor predeterminado si BASE_URL no está definido
+      const baseUrl = process.env.BASE_URL || "18.226.28.27:5001"; // Valor predeterminado si BASE_URL no está definido
       const fullUrl = propiedad.imagen_destacada_url
         ? `${baseUrl}${propiedad.imagen_destacada_url}`
         : null;
@@ -57,8 +62,8 @@ router.get("/:id", async (req, res) => {
     const { id } = req.params;
 
     const query = `
-      SELECT 
-        p.*, 
+      SELECT
+        p.*,
         i.url AS imagen_destacada_url
       FROM propiedades p
       LEFT JOIN imagenes i ON p.imagen_destacada_id = i.id
@@ -73,7 +78,7 @@ router.get("/:id", async (req, res) => {
     }
 
     const propiedad = result.rows[0];
-    const baseUrl = process.env.BASE_URL || "http://localhost:5001"; // Valor predeterminado si BASE_URL no está definido
+    const baseUrl = process.env.BASE_URL || "18.226.28.27:5001"; // Valor predeterminado si BASE_URL no está definido
 
     // Construir la URL completa para la imagen destacada
     if (propiedad.imagen_destacada_url) {
@@ -114,8 +119,8 @@ router.get("/api/propiedades/search", async (req, res) => {
     const { tipo_id, ciudad_id } = req.query;
 
     let query = `
-      SELECT 
-        p.*, 
+      SELECT
+        p.*,
         i.url AS imagen_destacada_url,
         t.nombre AS tipo_nombre,
         c.nombre AS ciudad_nombre

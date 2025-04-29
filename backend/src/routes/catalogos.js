@@ -15,6 +15,8 @@ router.get("/ciudades", obtenerCiudades);
 router.get("/estados", obtenerEstados);
 router.get("/tipos", obtenerTipos);
 router.get("/monedas", obtenerMonedas);
-router.get("/catalogos", catalogosController.obtenerCatalogos);
+
+// Ruta principal para obtener todos los catálogos
+router.get("/", catalogosController.obtenerCatalogos); // Cambia "/catalogos" a "/"
 
 module.exports = router;
