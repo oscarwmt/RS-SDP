@@ -26,7 +26,7 @@ const SearchResults = () => {
   useEffect(() => {
     const fetchProperties = async () => {
       try {
-        const base = import.meta.env.VITE_BASE_URL || "http://18.226.28.27:5001";
+        const base = import.meta.env.VITE_BASE_URL || "localhost:5001";
         const token = localStorage.getItem("token");
         const headers = { Authorization: `Bearer ${token}` };
         const response = await axios.get(`${base}/api/propiedades`, {
@@ -60,7 +60,7 @@ const SearchResults = () => {
 
     const fetchCatalogos = async () => {
       try {
-        const base = import.meta.env.VITE_BASE_URL || "http://18.226.28.27:5001";
+        const base = import.meta.env.VITE_BASE_URL || "localhost:5001";
         const response = await axios.get(`${base}/api/catalogos`);
         setCatalogos(response.data);
       } catch (error) {

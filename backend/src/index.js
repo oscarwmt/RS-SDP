@@ -8,24 +8,17 @@ const app = express();
 const PORT = process.env.PORT || 5001;
 
 // Configuración de CORS
-const allowedOrigins = process.env.NODE_ENV === "production"
-    ? ["http://18.226.28.27"]
+const allowedOrigins =
+  process.env.NODE_ENV === "production"
+    ? ["localhost"]
     : ["http://localhost:5173"];
 
- const corsOptions = {
-  origin: "http://18.226.28.27", // Permitir solicitudes desde el frontend
+const corsOptions = {
+  origin: "http://localhost:5173", // Permitir solicitudes desde el frontend
   methods: ["GET", "POST", "PUT", "DELETE"], // Métodos permitidos
   allowedHeaders: ["Content-Type", "Authorization"], // Encabezados permitidos
-  //credentials: true, // Permitir envío de cookies o credenciales
+  credentials: true, // Permitir envío de cookies o credenciales
 };
-
-// Configurar CORS para permitir solicitudes desde tu frontend
-//const corsOptions = {
-//  origin: 'http://18.226.28.27',  // Aquí debes poner la URL de tu frontend
-//  methods: 'GET,POST,PUT,DELETE', // Métodos que permites
-//  allowedHeaders: 'Content-Type,Authorization', // Los encabezados permitidos
-//};
-
 
 app.use(cors(corsOptions)); // Usar configuración de CORS
 
@@ -59,5 +52,5 @@ app.get("/", (req, res) => {
 
 // Iniciar el servidor
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://18.226.28.27:${PORT}`);
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });

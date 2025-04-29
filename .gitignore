@@ -2,3 +2,17 @@ frontend/node_modules
 backend/node_modules
 frontend/.env
 backend/.env
+backend/uploads
+frontend/build
+frontend/dist
+frontend/.next
+frontend/.next-cache
+frontend/.next-standalone
+frontend/.next/cache
+frontend/.next/server
+frontend/.next/static
+frontend/.next/trace
+frontend/.next/trace-manifest.json
+frontend/.next/BUILD_ID
+was-hosting-280425.pem
+propiedades.dump
