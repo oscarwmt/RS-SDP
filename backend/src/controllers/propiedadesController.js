@@ -38,7 +38,7 @@ const createPropiedad = async (req, res) => {
 
     const usuarioId = req.user.id;
 
-    // Convertir valores booleanos ("si" / "no") a "si" o "no" para piscina, quincho y mascotas
+    // Convertir valores booleanos ("si" / "no") a "si" o "no"
     const parseStringBoolean = (value) =>
       value === "si" || value === true ? "si" : "no";
 
@@ -54,8 +54,8 @@ const createPropiedad = async (req, res) => {
 
     let imagenDestacadaId = null;
 
+    // Si se subieron imágenes, asignar la primera como imagen destacada
     if (nuevasImagenes.length > 0) {
-      // Insertar la imagen destacada sin propiedad_id
       const result = await pool.query(
         `INSERT INTO imagenes (url) VALUES ($1) RETURNING id`,
         [`/uploads/${nuevasImagenes[0]}`]
@@ -64,41 +64,40 @@ const createPropiedad = async (req, res) => {
       console.log("Imagen destacada insertada con ID:", imagenDestacadaId);
     }
 
-    // Construir la consulta SQL con valores directos
+    // Insertar la propiedad con la imagen destacada
     const query = `
       INSERT INTO propiedades (
         titulo, descripcion, direccion, precio, moneda_id, ciudad_id, estado_id, tipo_id,
         habitaciones, banos, estacionamientos, construido_m2, terreno_m2,
         piscina, quincho, mascotas, destacada, imagen_destacada_id, usuario_id
       ) VALUES (
-        '${titulo?.trim()}', 
-        '${descripcion?.trim()}', 
-        '${direccion?.trim()}', 
-        ${parseFloat(precio)}, 
-        ${parseInt(moneda_id)}, 
-        ${parseInt(ciudad_id)}, 
-        ${parseInt(estado_id)}, 
-        ${parseInt(tipo_id)}, 
-        ${parseInt(habitaciones)}, 
-        ${parseInt(banos)}, 
-        ${parseInt(estacionamientos)}, 
-        ${parseInt(construido_m2)}, 
-        ${parseInt(terreno_m2)}, 
-        '${nuevaPiscina}', 
-        '${nuevoQuincho}', 
-        '${nuevasMascotas}', 
-        ${nuevaDestacada}, 
-        ${imagenDestacadaId}, 
-        ${usuarioId}
+        $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19
       ) RETURNING *;
     `;
 
-    console.log("Consulta SQL generada:");
-    console.log(query);
+    const values = [
+      titulo?.trim(),
+      descripcion?.trim(),
+      direccion?.trim(),
+      parseFloat(precio),
+      parseInt(moneda_id),
+      parseInt(ciudad_id),
+      parseInt(estado_id),
+      parseInt(tipo_id),
+      parseInt(habitaciones),
+      parseInt(banos),
+      parseInt(estacionamientos),
+      parseInt(construido_m2),
+      parseInt(terreno_m2),
+      nuevaPiscina,
+      nuevoQuincho,
+      nuevasMascotas,
+      nuevaDestacada,
+      imagenDestacadaId,
+      usuarioId,
+    ];
 
-    // Ejecutar la consulta SQL
-    const result = await pool.query(query);
-
+    const result = await pool.query(query, values);
     const nuevaPropiedad = result.rows[0];
     console.log("Propiedad creada:", nuevaPropiedad);
 
@@ -115,7 +114,7 @@ const createPropiedad = async (req, res) => {
     }
 
     // Insertar las imágenes adicionales (excepto la destacada)
-    if (nuevasImagenes.length > 0) {
+    if (nuevasImagenes.length > 1) {
       const inserts = nuevasImagenes.slice(1).map((nombreArchivo) => {
         console.log(
           "Insertando imagen:",
@@ -160,6 +159,7 @@ const updatePropiedad = async (req, res) => {
       quincho,
       mascotas,
       destacada,
+      imagen_destacada_id, // Nuevo campo para la imagen destacada
     } = req.body;
 
     console.log("Datos recibidos para actualizar:", req.body);
@@ -177,52 +177,54 @@ const updatePropiedad = async (req, res) => {
     const nuevaDestacada = destacada === "si" || destacada === true;
 
     // Actualizar la propiedad en la base de datos
-    const result = await pool.query(
-      `
-        UPDATE propiedades
-        SET
-          titulo = $1,
-          descripcion = $2,
-          direccion = $3,
-          precio = $4,
-          moneda_id = $5,
-          ciudad_id = $6,
-          estado_id = $7,
-          tipo_id = $8,
-          habitaciones = $9,
-          banos = $10,
-          estacionamientos = $11,
-          construido_m2 = $12,
-          terreno_m2 = $13,
-          piscina = $14,
-          quincho = $15,
-          mascotas = $16,
-          destacada = $17
-        WHERE id = $18
-        RETURNING *
-      `,
-      [
-        titulo?.trim(),
-        descripcion?.trim(),
-        direccion?.trim(),
-        parseFloat(precio),
-        parseInt(moneda_id),
-        parseInt(ciudad_id),
-        parseInt(estado_id),
-        parseInt(tipo_id),
-        parseInt(habitaciones),
-        parseInt(banos),
-        parseInt(estacionamientos),
-        parseInt(construido_m2),
-        parseInt(terreno_m2),
-        nuevaPiscina,
-        nuevoQuincho,
-        nuevasMascotas,
-        nuevaDestacada,
-        id,
-      ]
-    );
+    const query = `
+      UPDATE propiedades
+      SET
+        titulo = $1,
+        descripcion = $2,
+        direccion = $3,
+        precio = $4,
+        moneda_id = $5,
+        ciudad_id = $6,
+        estado_id = $7,
+        tipo_id = $8,
+        habitaciones = $9,
+        banos = $10,
+        estacionamientos = $11,
+        construido_m2 = $12,
+        terreno_m2 = $13,
+        piscina = $14,
+        quincho = $15,
+        mascotas = $16,
+        destacada = $17,
+        imagen_destacada_id = $18 -- Actualizar la imagen destacada
+      WHERE id = $19
+      RETURNING *
+    `;
 
+    const values = [
+      titulo?.trim(),
+      descripcion?.trim(),
+      direccion?.trim(),
+      parseFloat(precio),
+      parseInt(moneda_id),
+      parseInt(ciudad_id),
+      parseInt(estado_id),
+      parseInt(tipo_id),
+      parseInt(habitaciones),
+      parseInt(banos),
+      parseInt(estacionamientos),
+      parseInt(construido_m2),
+      parseInt(terreno_m2),
+      nuevaPiscina,
+      nuevoQuincho,
+      nuevasMascotas,
+      nuevaDestacada,
+      parseInt(imagen_destacada_id), // Nueva imagen destacada
+      id,
+    ];
+
+    const result = await pool.query(query, values);
     const propiedadActualizada = result.rows[0];
     console.log("Propiedad actualizada:", propiedadActualizada);
 

@@ -34,7 +34,7 @@ router.get("/", async (req, res) => {
 
     // Construir la URL completa para la imagen destacada
     const propiedades = result.rows.map((propiedad) => {
-      const baseUrl = process.env.BASE_URL || "localhost:5001"; // Valor predeterminado si BASE_URL no está definido
+      const baseUrl = process.env.BASE_URL || "18.226.28.27:5001"; // Valor predeterminado si BASE_URL no está definido
       const fullUrl = propiedad.imagen_destacada_url
         ? `${baseUrl}${propiedad.imagen_destacada_url}`
         : null;
@@ -77,7 +77,7 @@ router.get("/:id", async (req, res) => {
     }
 
     const propiedad = result.rows[0];
-    const baseUrl = process.env.BASE_URL || "localhost:5001"; // Valor predeterminado si BASE_URL no está definido
+    const baseUrl = process.env.BASE_URL || "18.226.28.27:5001"; // Valor predeterminado si BASE_URL no está definido
 
     // Construir la URL completa para la imagen destacada
     if (propiedad.imagen_destacada_url) {

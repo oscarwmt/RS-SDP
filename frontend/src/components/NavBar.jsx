@@ -9,7 +9,7 @@ const Navbar = () => {
         <div className="logo">
           <Link to="/" className="flex items-center">
             <img
-              src="./imagenes/logoSDP.png" // Asegúrate de tener una imagen llamada logo.png en la carpeta pública
+              src="http://18.226.28.27:5001/uploads/logoSDP.png" // Asegúrate de tener una imagen llamada logo.png en la carpeta pública
               alt="Logo"
               className="w-450 h-12 rounded-full mr-2"
             />
