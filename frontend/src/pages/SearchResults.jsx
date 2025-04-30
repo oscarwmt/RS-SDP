@@ -3,6 +3,7 @@ import axios from "axios";
 import { useLocation, useNavigate, Link } from "react-router-dom"; // Importar Link
 import Navbar from "../components/NavBar";
 import Footer from "../components/Footer";
+import { formatNumber } from "../utils/formatNumber";
 
 const SearchResults = () => {
   const [propiedades, setPropiedades] = useState([]);
@@ -176,7 +177,7 @@ const SearchResults = () => {
                   {getCiudadNombre(prop.ciudad_id)}
                 </p>
                 <p className="text-blue-600 font-bold">
-                  {getMonedaSimbolo(prop.moneda_id)} {prop.precio}
+                  {getMonedaSimbolo(prop.moneda_id)} {formatNumber(prop.precio)}
                 </p>
               </Link>
             ))

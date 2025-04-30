@@ -3,6 +3,7 @@ backend/node_modules
 frontend/.env
 backend/src/index.js
 backend/.env
+backend/src/Home.js
 backend/uploads
 frontend/build
 frontend/dist

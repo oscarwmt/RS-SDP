@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import Navbar from "../components/NavBar"; // Importar Navbar
 import Footer from "../components/Footer"; // Importar Footer
+import { formatNumber } from "../utils/formatNumber";
 
 const PropertyDetails = () => {
   const { id } = useParams(); // ID de la propiedad
@@ -153,7 +154,7 @@ const PropertyDetails = () => {
               {property?.titulo}
             </h2>
             <p className="text-xl font-semibold text-blue-600 mb-4">
-              {getMonedaSimbolo(property?.moneda_id)} {property?.precio}
+              {getMonedaSimbolo(property?.moneda_id)} {formatNumber(property?.precio)}
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
               <div>

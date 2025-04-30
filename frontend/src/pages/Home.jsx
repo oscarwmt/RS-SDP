@@ -7,6 +7,7 @@ import Slider from "react-slick"; // Biblioteca para el carrusel
 import "slick-carousel/slick/slick.css"; // Estilos del carrusel
 import "slick-carousel/slick/slick-theme.css"; // Tema del carrusel
 import { Link } from "react-router-dom"; // Importar Link
+import { formatNumber } from "../utils/formatNumber";
 
 const Home = () => {
   const [featuredProperties, setFeaturedProperties] = useState([]);
@@ -109,7 +110,7 @@ const Home = () => {
                     {getCiudadNombre(property.ciudad_id)}
                   </p>
                   <p className="text-blue-400 font-bold">
-                    {getMonedaSimbolo(property.moneda_id)} {property.precio}
+                    {getMonedaSimbolo(property.moneda_id)} {formatNumber(property.precio)}
                   </p>
                 </div>
               </div>
@@ -156,7 +157,7 @@ const Home = () => {
                       {getCiudadNombre(property.ciudad_id)}
                     </p>
                     <p className="text-blue-600 font-bold">
-                      {getMonedaSimbolo(property.moneda_id)} {property.precio}
+                      {getMonedaSimbolo(property.moneda_id)} {formatNumber(property.precio)}
                     </p>
                   </div>
                 </Link>

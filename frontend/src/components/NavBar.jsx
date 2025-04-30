@@ -9,9 +9,9 @@ const Navbar = () => {
         <div className="logo">
           <Link to="/" className="flex items-center">
             <img
-              src="./imagenes/logoSDP.png" // Asegúrate de tener una imagen llamada logo.png en la carpeta pública
-              alt="Logo"
-              className="w-450 h-12 rounded-full mr-2"
+              src={`${import.meta.env.VITE_BASE_URL}/uploads/logoSDP.png`} // Usa VITE_BASE_URL para la ruta
+              alt="Logo Santo Domingo Propiedades"
+              className="w-42 h-14 rounded-full mr-2"
             />
             <span className="font-bold text-white"></span>
           </Link>
@@ -59,9 +59,8 @@ const Navbar = () => {
             </svg>
             +56 9 6818 5099
           </a>
-
           {/* Facebook */}
-          <a
+          {/* <a
             href="https://www.facebook.com"
             target="_blank"
             rel="noopener noreferrer"
@@ -82,8 +81,7 @@ const Navbar = () => {
               />
             </svg>
           </a>
-
-          {/* LinkedIn */}
+          {/* LinkedIn 
           <a
             href="https://www.linkedin.com"
             target="_blank"
@@ -105,8 +103,7 @@ const Navbar = () => {
               />
             </svg>
           </a>
-
-          {/* Instagram */}
+          {/* Instagram 
           <a
             href="https://www.instagram.com"
             target="_blank"
@@ -127,7 +124,8 @@ const Navbar = () => {
                 d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z"
               />
             </svg>
-          </a>
+          </a>{" "}
+          */}
         </div>
       </div>
     </nav>
